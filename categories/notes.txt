@@ -1,0 +1,123 @@
+(geometrical) n-simplex : convex set spanned by n+1 independent points V (vertices)
+
+faces : convex sets spanned by W subset of V
+
+(geometrical) simplicial complex : set of simplices stable by face and such that every intersection is a face.
+Entirely defined by the collections of vertices that form a simplex.
+We can separate them by the dimension of the simplexe : X_0...X_k
+
+abstract simplicial complex : sets of vertices X_0...X_k verifying the property that each subset of X_k of size j+1 is in X_j (face of a k-1-simplex)
+
+
+abstract lose size and embedding information but keep combinatorial information (up to homeomorphism)
+
+simplicial maps (morphisms over simplicial complex) : if [v_0...v_k] is a simplex, then [f(v_0)...f(v_k)] too [eventually with repetition]
+Entirely defined by the image of X_0
+Ex : inclusion, collapse
+
+ordered simplex : same with ordered vertices, noted \vert \Delta^n \vert
+Extension of ordering to ordered simplicial complex
+
+face map d_i : remove vertex i. map to a face. Ordered simplices needed.
+Any face can be recovered by a composition of face maps.
+It verifies the propery i<j -> d_i d_j = d_{j-1} d_i (*)
+
+Delta sets : Any sets X_0 ... X_n with functions d_i X_n+1 -> X_n verifying the same property as face maps
+An other example than simplicial complex : cone obtained by gluing two edges of a 2-simplex.
+Main generalisation : allows two distinct elements to have the same set of vertices.
+
+A delta set can be seen as a couple (X,d), where X are standards simplices and d the face maps of those simplices.
+
+
+CATEGORY \hat \Delta
+strict order homomorphism from [m] to [n] = way to embed the standard ordered m-simplex in the standard ordered n-simplex
+morphism in the opposite category are exactly face maps. th property (*) can be easily verified
+
+Delta sets characterised as COVARIANT functor \DELTA^op -> SET : F(n) = X_n and F(m->n) gives the face maps
+
+Delta maps (morphisms over delta sets) : Natural transformation from F to G, that is (F_n -> G_n)_{n \in N} commuting with face maps.
+
+
+
+
+
+Interlude
+Soit X = <triangle> = <0,1,2> et  Y=<arête>=<0,1>.
+Foncteur FX
+FX([0]) = {[0],[1],[2]}
+FX([1]) = {[0,1],[1,2],[0,2]}
+FX([2]) = {[0,1,2}
+FX(p n->m ) = fonction qui a chaque n-simplexe associe sa projection selon les sommets de p
+Foncteur GY
+GY([0]) = {[0],[1]}
+GY([1]) = {[0,1]}
+
+
+
+Considerons l'effondrement du triangle sur l'arete. [simplicial map]
+Pour que ce morphisme soit un delta map, il faut pour n=0,1,2 une flèche de FX_n -> GY_n
+Passer d'un delta set à un autre c'est passer de X_n a Y_n donc de FX([n]) à GY([n])
+En particulier, il faut que chaque X_n se transforme en Y_n
+
+
+Degeneracy Simplices : Still ordered, but not necessarily unique.
+Cone : pi([0,1,2) = [0,1,1]
+
+Degeneracy maps : Converse of face maps
+s_j = [0 ... j j ... n]
+Property : If i<=j then s_i s_j = s_{j+1} s_i
+
+Relation betwzzn Degeneracy maps and Face maps
+d_i s_j = s_{j-1} d_i if i<j
+d_js_j = d_{j+1} s_j = id
+d_i s_j = s_j d_{i-1} if i>	j+1
+
+Simplicial set : Any sets X_0 ... X_n with functions d_i X_n+1 -> X_n and s_i X_n -> X_n+1
+verifying properties of face maps and degeneracy maps
+Each ordered simplicial complex or Delta set can be easily extended
+Each simplicial sets can forget its degeneracy maps to become a delta set
+
+Ex : X topologic space, S(X)n continuous function \vert \Delta_n \vert -> X i.e ordered n-simplex -> X.
+Then S(X)n  is a simplicial set, called singular set of X. (a shortcut for the image of X by S(X)_n)
+SINGULAR CHAIN COMPLEX = Abelian_Free(S(X)_n)
+A singular simplex is an element of the singular set (\sigma or \sigma(X))
+We can easily define the faces of the singular simplex and a degenerated one.
+	
+
+Nondegenerate simplex : cant be written s_i(y) with y \in X_{n-1}
+-> S(X)_n is nondegenerate if it cannot be collapsed first then sent to a singular simplex.
+
+
+
+
+CATEGORY \Delta
+order homomorphism from [m] to [n] = way to embed the standard ordered m-simplex in the standard ordered n-simplex
+Difference with category of delta sets : function not necessarely increasing (can be non-decreasing)
+Now, morphisms can be either opposite of face maps or degeneracy maps. [inclusion or collapses]
+
+In the same fashion, simplicial sets characterised as COVARIANT functor \DELTA^op -> SET : F(n) = X_n and F(m->n) gives the face/degeneracy maps
+Simplicial morphisms are natural transformations between two functors representing simplicial sets.
+That is, a simplicial morphism is a collection (f_n : X_n -> Y_n) commuting with face and degeneracy operators.
+We can define simplicial morphisms from simplicial maps.
+However, morphisms are not characterized by the image of the vertices (If the resulting simplicial set has two edges between the same vertices..)
+
+
+Back from combinatorics to geometry/topology
+
+Realisation of a simplicial set : \vert X \vert = \prod X_n \times \vert \Delta_n \vert \\ \sim
+The cartesian product of each simplex with the standard simplex of same dimension is quotiented to match faces and degeneracies.
+Realisaction of a simplicial set does not always match realisation of its subsequent delta set obtained by omitting the structure
+However they are HOMOTOPY EQUIVALENT, whatever this means.
+
+What is a CW complex topological space ?
+
+A degenerate simplex is a degeneracy of a unique degenerate simplex
+
+Realisation of a simplicial set is a CW complex with one cell for each non-degenerate n-simplex of X.
+
+
+The realiation functor is adjoint to the singular set functor S
+
+
+
+

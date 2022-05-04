@@ -1,0 +1,219 @@
+\documentclass[pdf]{beamer}
+\usepackage[utf8]{inputenc}
+\usefonttheme{professionalfonts}
+\usetheme{Madrid}
+\useoutertheme{shadow}
+\useinnertheme{circles} %Less sharpened edges
+\usecolortheme{}
+\title{Tree Automata and Applications}
+\author{Marius }
+\date{December}
+
+\usepackage{stmaryrd}   %N
+\usepackage{esvect}     %Vector
+\usepackage{hyperref}   %hypertext link
+\usepackage{graphicx}
+\usepackage{amsmath}    %overset
+\usepackage{amssymb}    %square
+\usepackage{amsthm}     %proof
+\usepackage{xcolor}     %color
+\usepackage{esvect}     %Vector
+\usepackage{tikz}       %draw
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usetikzlibrary{arrows}
+
+
+%%% Operator %%%
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\card}[1]{\ensuremath{\left\|#1 \right\|}}
+\newcommand{\interval}[2]{\ensuremath{\llbracket #1, \; #2 \rrbracket}}
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\br}[1]{\ensuremath{\llbracket #1 \rrbracket}} %Interpretation
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+% Shortcuts sets
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}} %Abrev mathcal
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+
+%%% shorcuts logic %%%
+\newcommand{\G}{\Gamma} % Abreviation pour logique etc..
+\newcommand{\D}{\Delta} % Abreviation pour logique
+\newcommand{\T}{\mathcal{T}} %Abreviation T pour logique
+
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\R}{\mathcal{R}}
+\newcommand{\F}{\mathcal{F}}
+
+\begin{document}
+\maketitle
+\begin{frame}
+\frametitle{Bottom-up tree automata}
+\begin{block}{Definition}
+A \textbf{Bottom-up tree automata (NFTA)} is an automaton with rules $f(q_0,...,q_{n-1}) \rightarrow q$.
+\end{block}
+
+
+\begin{exampleblock}{Intuition}
+The idea is to successively reduce term t to a single state, starting from the leave \newline
+What about non-closed terms ?
+\end{exampleblock}
+
+
+\begin{alertblock}{Pumping Lemma}
+Let $L$ recognizable.\newline 
+Then there exists k such that for all terms $t$ such that $\mc{H}(t) > k$, there exists contexts $C,D$ and a term $u$ s.t \newline
+$\bullet$ $D$ is not trivial [i.e not a variable] \newline
+$\bullet$ $t = C[D[u]]$ \newline
+$\bullet$ $\forall n \in \N, C[D^n[u]] \in L$S. \newline
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Top-down tree automata}
+
+\begin{block}{Definition}
+A \textbf{Top-down tree automata (T-NFTA)} is an automaton with rules $q(f(t_0...t_{n-1})) \rightarrow (q_0(t_0),...,q_{n-1}(t_{n-1}))$.
+\end{block}
+
+
+\begin{exampleblock}{Intuition}
+The states are applied from the root to the leaves a bit like a morphism.\newline
+\end{exampleblock}
+
+\begin{alertblock}{Equivalence}
+$NFTA=DFTA=	T-NFTA$\newline
+All those tree automata are closed under boolean operations.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Homomorphism}
+
+\begin{block}{Definition}
+A \textbf{Tree Homomorphism} is a mapping $h \F_n \rightarrow T(\F,x_0..x_{n-1}$)\newline
+Extension to tree : $h(f(a,b)) = h(f)[x_0 \rightarrow a, x_1 \rightarrow b]$\newline
+\end{block}
+
+\begin{exampleblock}{Properties}
+$h$ is linear if $\forall f, h(f)$  is linear [each variable appears once at most].
+\end{exampleblock}
+
+\begin{alertblock}{Recognizability}
+Linear homomorphisms preserve recognazibility \newline
+Inverse homomorphisms preserve recognazibility \newline
+Non-linear does not in general 
+[see $h(f)=f'(x_0,x_0), h(g)=g(a), L=\{f(g^n(a))\}$]
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\begin{block}{Definition}
+The \textbf{path language} of $t=f(g(a,b)$ is $\pi(t)=\{f1g1a,f1g2b\}$. [can easily be extended to languages.]
+The \textbf{path closure} of $L$ is the set of terms that one can build with $\pi(L)$
+$L$ is \textbf{path-closed} is $L=pc(L)$
+\end{block}
+
+
+\begin{alertblock}{Theorem}
+$L$ is path-closed $\Leftrightarrow L$ is recognizable by a T-DFTA.
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Definition}
+A \textbf{Congruence on terms} is an equivalence relation compatible with $\F$ \newline
+A congruence \textbf{saturates L} if $u \sim v$ implies $u \in L \Leftrightarrow v \in L$ \newline
+$u \sim_L v$ if and only if $\forall C, C[u] \in L \Leftrightarrow C[v] \in L$
+\end{block}
+
+\begin{alertblock}{Myhill-Nerode Theorem}
+The tree following propositions are equivalent \newline
+$\bullet$ $L$ is recognizable \newline
+$\bullet$ $L$ is saturated by a congruence of finite index \newline
+$\bullet$ $\sim_L$ is of finite index \newline	
+\end{alertblock}
+
+\begin{exampleblock}{Application}
+Proof of counter-example of non-linear homomorphisms
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Definition}
+The \textbf{front} of $t=f(a,g(b,a),c)$ is $ft(t)=abac$ [Formalism use positions] \newline
+A \textbf{Visibly Pushdown Automata (VPA)} is a pushdown automata where the size of the word pushed in the stack relies only on the letter read.
+\end{block}
+
+\begin{alertblock}{Propositions}
+Let $L$ be recognizable.\newline
+$\bullet$ $fr(L)$ is context-free. \newline
+$\bullet$ $L$ is recognizable by a VPA \newline
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Definitions}
+\textbf{Second-Order Logic } quantifies over relations \newline
+\textbf{Monadic Logic } quantifies only over sets \newline
+\textbf{Weak Second-Order } quantifies only over finite sets \newline
+\textbf{Weak MSO over with k successors} is \textbf{MSO}($<_1...<_k$) \newline
+\end{block}
+
+\begin{exampleblock}{Intuition}
+One have a formula over a tree. [e.g $\exists x, x \in S_g$ i.e g appears in $t$]\newline
+The trees recognized by this formula are $\{(t,v) \vert v(t) \text{ satisfies } \phi\}$\newline
+Here, $v$ is a valuation to positions and the subterm at position $p$ is $(t[p],(v(x)=p))_{x \in \mc{X}})$
+\end{exampleblock}
+
+\begin{alertblock}{Theorem}
+$L$ is recognizable if and only if there exists $\phi$ in WSkS such that $L=L(\phi)$.\newline
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Definition}
+An \textbf{unranked} tree may have an arbitrary number of children	\newline
+A \textbf{bottom-up hedge automata (NHA)} is an automaton with rules $a(q_0+(q_1.q_2)^*) \rightarrow q$.
+\textbf{UTL = Weak MSO(child,next)} [Unranked Tree Logic]
+\end{block}
+
+\begin{alertblock}{Properties}
+NHA can be determinized \newline
+Unranked tree can be mapped one-to-one with ranked tree using a phony symbol and reading the term on the leaves.\newline
+Recognizability is then equivalent. \newline
+UTL=NHA
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+
+\begin{block}{Definition}
+A \textbf{tree tuple} can be easily obtain by adding a symbol _ when there is no branch.\newline
+\textbf{\R_2} is the class of recognizable relations [the tree language $(t1,t2)$] \newline
+\textbf{\C_2} is the class of finite union of cross products of recognizable languages \newline
+\textbf{\C_2} is the class of relations recognizable by GTT\newline
+A \textbf{Ground Tree Tranducer} is two bottom-up NFTA. The relations recognizes $(t,u)$ if $t=C[t_1...t_n]$, $u=C[u_1...u_n]$ and $t_i \leftarrow q_i \rightarrow u_i$
+\end{block}
+
+\end{frame}
+
+
+\end{document}

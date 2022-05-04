@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+
+
+\title{Verification : Homework 3}
+\author{Marius }
+\date{October 2021}
+
+\usepackage{stmaryrd}	%N
+\usepackage{hyperref}	%hypertext link
+\usepackage{graphicx}
+\usepackage{amsthm}		%proof
+\usepackage{amsmath}    %overset		
+\newtheorem{theorem}{Theorem}[section] %[] = "name after"
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}{Lemma}[section]
+
+
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\T}{\mathcal{T}}
+\renewcommand{\l}{\mathcal{l}}
+ 
+
+\begin{document}
+
+\maketitle
+\subsubsection*{1.)}
+If $s \in \llbracket EGr \rrbracket$, then in particular $r \in \l(s)$.\newline
+Thus  $\llbracket EGr \rrbracket \subseteq \{ 6,8\}$\newline
+As $M,6^\omega \models Gr$ and $M,8^\omega \models Gr$, $\llbracket EGr \rrbracket = \{ 6,8\}$ \newline
+\subsubsection*{2.)}
+$s \in \llbracket AXq \rrbracket$ if and only if $\forall s'$ successors of $s, q \in \l(s')$.\newline
+Thus  $\llbracket AXq \rrbracket = \{2,4,8\}$\newline
+\subsubsection*{3.)}
+$s \in \llbracket \phi \rrbracket$, iff $s \in \llbracket EGr \rrbracket$ or $(q \notin \l(s)$ and $s$ has a successor $s'$ such that $q \in l(s'))$ \newline
+Thus, $\llbracket \phi \rrbracket = \llbracket EGr \rrbracket \cup \{2\} = \{2,6,8\} $\newline
+\subsubsection*{4.)}
+Let us notice that a path satisfies $GF(q \wedge \neg r)$ if and only if it intersects infinitely many times with $\llbracket q \wedge \neg r \rrbracket = \{3,4\}$. \newline
+Such a path always exists only from states 1,2,3,4,5 and 8. \newline
+In the same fashion, a path satisfies $GF\phi$ if and only if it intersects infinitely many times with $\llbracket \phi \rrbracket = \{2,6,8\}$. \newline
+This is always the case for a path starting from 6 or 7. \newline
+Thus $\llbracket E\psi \rrbracket = \{1,2,3,4,5,8\}$
+
+
+
+	
+
+\end{document}

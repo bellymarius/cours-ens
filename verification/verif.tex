@@ -1,0 +1,250 @@
+\documentclass[pdf]{beamer}
+\usepackage[utf8]{inputenc}
+\usefonttheme{professionalfonts}
+\usetheme{Madrid}
+\useoutertheme{shadow}
+\useinnertheme{circles} %Less sharpened edges
+\usecolortheme{}
+\title{Verification : Summary}
+\author{Marius}
+\date{07/01}
+
+\usepackage{stmaryrd}   %N
+\usepackage{esvect}     %Vector
+\usepackage{hyperref}   %hypertext link
+\usepackage{graphicx}
+\usepackage{amsmath}    %overset
+\usepackage{amssymb}    %square
+\usepackage{amsthm}     %proof
+\usepackage{xcolor}     %color
+\usepackage{esvect}     %Vector
+\usepackage{tikz}       %draw
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usetikzlibrary{arrows}
+
+
+%%% Operator %%%
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\card}[1]{\ensuremath{\left\|#1 \right\|}}
+\newcommand{\interval}[2]{\ensuremath{\llbracket #1, \; #2 \rrbracket}}
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\br}[1]{\ensuremath{\llbracket #1 \rrbracket}} %Interpretation
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+% Shortcuts sets
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}} %Abrev mathcal
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+
+%%% shorcuts logic %%%
+\newcommand{\G}{\Gamma} % Abreviation pour logique etc..
+\newcommand{\D}{\Delta} % Abreviation pour logique
+\newcommand{\T}{\mathcal{T}} %Abreviation T pour logique
+
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\R}{\mathcal{R}}
+
+\begin{document}
+\maketitle
+\begin{frame}
+\frametitle{LTL and FOL}
+
+\begin{block}{Definition}
+\textbf{TL(AP,SU,SS)} is a temporal logic with all the past and future quantifiers.\newline
+\textbf{FO(AP,<)} is the first-order logic.
+\end{block}
+
+
+\begin{exampleblock}{Intuition}
+$w,i \models \phi \mathbf{SS}\psi \Leftrightarrow $ Il y a eu un instant passé auquel $\psi$ était vrai et après lequel $\phi$ était vrai jusqu'à aujourd'hui.\newline
+$w,i \models \phi \mathbf{SU} \psi \Leftrightarrow $ Il y aura un instant futur auquel $\psi$ sera vrai et jusqu'auquel $\phi$ sera vrai.\newline
+Les operateurs \textbf{SS} and \textbf{SU} permettent de recréer tout les quantificateurs usuels.
+\end{exampleblock}
+
+
+\begin{alertblock}{Theorems}
+TL $\subseteq$ FO [Using the model $\N$]\newline
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{CTL and MSO}
+
+\begin{block}{Definition}
+\textbf{CTL$^*$(AP,SU)} is a temporal logic enabling path quantifiers \textbf{E} and \textbf{A} .\newline
+\textbf{CTL(AP,SU)} is a temporal logic resticting $CTL^*$ where all path quantifiers are followed by exactly one temporal operator.\newline
+\textbf{MSO(AP,<)} is the monadic second-order logic [enabling quantifying over sets]
+\end{block}
+
+
+\begin{exampleblock}{Intuition}
+$\M,\lambda \models \phi  \Leftrightarrow \phi$ est vrai dans le chemin $\lambda$.
+\end{exampleblock}
+
+
+\begin{alertblock}{Theorems}
+CTL $\subseteq$ MSO [Using the model $\N$]\newline
+CTL$^*$ $\subseteq$ MSO [Using the model $\N$]\newline
+\end{alertblock}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Buchi Automata}
+
+\begin{block}{Definition}
+\textbf{Büchi-automaton} is NFA where a $\omega$-word is recognized if it goes infinitely many times through $F$.\newline
+\textbf{General Büchi-automaton} is a BA where a $\omega$-word is recognized if it goes infinitely many times through all the $F_i$.\newline
+\end{block}
+
+
+
+
+\begin{alertblock}{Some properties}
+Büchi-automata are closed under boolean operations.\newline
+[intersection : go from a copy of the cartesian product to another when meeting a target state] \newline
+LTL \subseteq L(BA) \newline
+Büchi-automata and General Büchi-automata where are the same \newline	
+Büchi-automata and Deterministic Büchi-automata are NOT the same \newline	
+
+CTL$^*$ $\subseteq$ MSO [Using the model $\N$]\newline
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Partial Order Reduction : Definition}
+
+\begin{block}{Definition}
+A \textbf{labelled Kripke structure} is extended with actions.\newline
+An \textbf{independence relation} over actions is irreflexive, symmetric and confluent [if both actions can be chosen, they can be done in both orders]\newline
+A set of actions is\textbf{invisible} if it never change the truth of a AP.\newline
+The \textbf{stuterring-equivalence} of sequences is "equality modulo multiplicity"
+\end{block}
+
+
+\begin{alertblock}{Some properties}
+Any LTL without \textbf{X} is invariant under stuterring.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Partial Order Reduction : General Idea}
+\begin{exampleblock}{Ample set method}
+Idea : build a set of explored actions $red(s)$ following conditions :\newline
+1. Keep at least one action by state when possible [Avoid adding deadlocks] \newline
+2. Actions depending on $red(s)$ occurs after $red(s)$ in a concrete path starting with $s$. \newline
+2bis. In particular, all actions not from $red(s)$ are independent with all actions from $red(s)$ \newline
+3. Keep all actions or only an invisible subset [Preserve stuttering equivalence]. \newline
+4. An abstract action in a state $s$ in a cycle is in $red(cycle)$ [No starving]. \newline	
+\end{exampleblock}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Fair Kripke structure and complexity}
+\begin{block}{Definition}
+A  \textbf{fair kripke structure} is extended states set visited infinitely often. \newline	
+Can be simulated in CTL$^*$ with $\bigwedge GF F_i$ \newline
+Cannot be simulated in CTL. \newline
+
+\end{block}
+
+\begin{alertblock}{Complexity}
+LTL satisfiability is \textbf{PSPACE}-complete. \newline
+CTL$^*$ model checking is \textbf{PSPACE}-complete. \newline
+CTL model checking is decidable in time $O(\vert M \vert \cdot \vert \phi \vert)$
+CTL model checking is decidable in time $O(\vert M \vert \cdot \vert \phi \vert)$
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Binary Decision Diagrams}
+\begin{block}{Definition}
+A \textbf{Binary Decision Graph} is a DAG labelling by variables and stricty ordering them. Leaves are labelled 0 and 1.\newline
+A \textbf{Binary Decision Diagram} is a BDG with no subgraphs isomorphic and no redundant nodes.\newline
+A \textbf{Binary Decision Diagram with complement arcs} is a BDD with potential filled circle on edges inverting the meaning\newline
+\end{block}
+
+\begin{exampleblock}{Simplification}
+One can merge nodes with the same successors and neglect the leaf labelled 0.
+\end{exampleblock}
+
+\begin{alertblock}{Theorem}
+Given a function $\V \rightarrow \bb{B}^n$, there is an unique BDD up to isomorphism. \newline
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Binary Decision Diagrams : Operations}
+
+\begin{alertblock}
+Equivalence problem can be solved through isomorphic test \newline
+Negation can be solved through exchange of leaves \newline
+Conjonction can be solved through the following formula : \newline
+$ite(x,F[x:=1]\wedge G[x:=1],F[x:=0]\wedge G[x:=0])$ \newline
+Disjonction can be solved in the same way \newline
+CBDD are unique only if we prohibit negated 0-labelled edges\newline
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Pushdown Systems}
+
+\begin{block}{Definition}
+A \textbf{Pushdown system} is basically the transition system of a nested stack automaton without any input.\newline
+The \textbf{P-Automaton} is the true notion of automaton with $qw$ as inputs.\newline
+\end{block}
+
+\begin{exampleblock}{Intuition}
+Replacing the last item pushed $\sim$ classical instruction \newline
+Pushing a new item $\sim$ procedure call \newline
+Poping the last item $\sim$ return
+\end{exampleblock}
+
+\begin{alertblock}{Property}
+Reachability from a configuration to another is decidable
+\end{alertblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Petri Nets}
+
+\begin{block}{Definition}
+A \textbf{Petri Net} is a tuple $\lbracket P,T,F,W,wm_0 \rbracket$, where : \newline
+$\bullet$ $P$ is the set of places \newline
+$\bullet$ $T$ is the set of transitions \newline
+$\bullet$ $F \subseteq P \times T \cup T \times P$ is the flow relations \newline
+$\bullet$ $T$ is the set of transitions \newline
+
+The \textbf{P-Automaton} is the true notion of automaton with $qw$ as inputs.\newline
+\end{block}
+
+\begin{exampleblock}{Intuition}
+Replacing the last item pushed $\sim$ classical instruction \newline
+Pushing a new item $\sim$ procedure call \newline
+Poping the last item $\sim$ return
+\end{exampleblock}
+
+\begin{alertblock}{Property}
+Reachability from a configuration to another is decidable
+\end{alertblock}
+
+\end{frame}
+
+\end{document}

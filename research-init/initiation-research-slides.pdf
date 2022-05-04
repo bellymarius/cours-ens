@@ -1,0 +1,270 @@
+\documentclass[pdf]{beamer}
+\usepackage[utf8]{inputenc}
+\usefonttheme{professionalfonts}
+\usetheme{Madrid}
+\useoutertheme{shadow}
+\useinnertheme{circles} %Less sharpened edges
+\usecolortheme{}
+\title{Mathematics, science of guessing ?}
+\subtitle{The art of conjecturing}
+\author{Marius Belly - Le Guilloux}
+\titlegraphic{\includegraphics[width=0.4\textwidth]{riemann.png}}
+\date{\vspace{-5ex}}
+
+\usepackage{stmaryrd}   %N
+\usepackage{esvect}     %Vector
+\usepackage{hyperref}   %hypertext link
+\usepackage{graphicx}
+\usepackage{amsmath}    %overset
+\usepackage{amssymb}    %square
+\usepackage{amsthm}     %proof
+\usepackage{xcolor}     %color
+\usepackage{esvect}     %Vector
+\usepackage{tikz}       %draw
+\usepackage{ulem} 		%sout
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usetikzlibrary{arrows}
+
+
+%%% Operator %%%
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\card}[1]{\ensuremath{\left\|#1 \right\|}}
+\newcommand{\interval}[2]{\ensuremath{\llbracket #1, \; #2 \rrbracket}}
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\br}[1]{\ensuremath{\llbracket #1 \rrbracket}} %Interpretation
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+% Shortcuts sets
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}} %Abrev mathcal
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+
+%%% shorcuts logic %%%
+\newcommand{\G}{\Gamma} % Abreviation pour logique etc..
+\newcommand{\D}{\Delta} % Abreviation pour logique
+\newcommand{\T}{\mathcal{T}} %Abreviation T pour logique
+
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\R}{\mathcal{R}}
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}
+\frametitle{Tiling of deficient boards with L-trominos}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.08\textwidth]{L-tromino.png}
+\includegraphics[width=0.3\textwidth]{board.png}
+\caption{\label{fig:L-tromino}A L-tromino and a deficient board.}
+\end{figure}
+
+\pause
+
+\begin{exampleblock}{Problems}
+$\bullet$ Given a deficient board, can we cover it with L-trominos ? \newline
+\pause
+$\bullet$ Given a positive integer $n$, is there a tiling of a deficient $n$-board ?\newline
+\pause
+$\bullet$ Given a positive integer $n$, are there tilings for all deficient $n$-boards?\newline
+\pause
+$\bullet$ What is the complexity of the existence of a tilable deficient $n$-board ?
+\end{exampleblock}
+
+
+\end{frame}
+\begin{frame}
+\frametitle{Tiling of deficient boards with L-trominos}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.08\textwidth]{L-tromino.png}
+\includegraphics[width=0.3\textwidth]{board.png}
+\caption{\label{fig:L-tromino}A L-tromino and a deficient board.}
+\end{figure}
+
+
+\begin{exampleblock}{Problems}
+$\bullet$ Given a deficient board, can we cover it with L-trominos ? \newline
+$\bullet$ Given a positive integer $n$, is there a tiling of a deficient $n$-board ?\newline
+$\bullet$ \textbf{Given a positive integer $n$, are there tilings for all deficient $n$-boards?}\newline
+$\bullet$ What is the complexity of the existence of a tilable deficient $n$-board ?
+\end{exampleblock}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{0- Familiarize with the problem}
+
+\begin{table}
+\centering
+\begin{tabular}{l|r |r}
+Size & Proportions of tilings & Guess\\\hline
+1 & 0/1 & No \\
+2 & 1/1  &  Yes \\
+3 & 0/3 & No \\
+4 & 3/3 & Yes \\
+5 & 3/6 & No \\
+6 & 0/6 ? & No \\
+7 & 4/10 ? & No  \\
+8 & 7/10 ? & Yes \\
+9 & 0/10  ? & No \\
+10 & Discouraged \\
+\end{tabular}
+\caption{\label{tab:widgets}Experimental results.}
+\end{table}
+\end{frame}
+
+\begin{frame}
+\frametitle{1- Formulating the conjecture}
+
+\begin{alertblock}{Conjecture 1}
+All deficient $n$-boards can be tiled $\Leftrightarrow \exists k>0~~n=2^k$
+\end{alertblock}
+
+\end{frame}
+\begin{frame}
+\frametitle{2- Reformulating the conjecture}
+
+\begin{alertblock}{Conjectures}
+1.1.$\forall k>0$ all deficient $2^k$-board can be tiled.\newline
+1.2.$\forall n \in \N$, if $n$ is not a power of 2, there is a deficient $n$-board that cannot be tiled.\newline
+\end{alertblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{3- Looking up}
+
+\begin{block}{Looking up for similar results}
+Too often forgotten !\newline
+\pause
+Save you a lot of time \newline
+\pause
+Save you from a major disappointment. \newline
+\pause
+Give you ideas to tackle the conjecture. \newline
+\end{block}
+\pause
+\begin{alertblock}{Golomb's theorem}
+A tiling of a $2^n \times 2^n$ deficient board is always possible if $n\geq1$
+\end{alertblock}
+	
+\end{frame}
+\begin{frame}
+\frametitle{Interlude : Golomb's proof}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.08\textwidth]{reptile.png}
+\caption{\label{fig:reptile}L-trominos can be covered with twice smaller ones.}
+\end{figure}
+\pause
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{proof.png}
+\caption{\label{fig:proof} Green squares are covered by self-covering, white ones by induction.}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{4- Find and prove easy cases}
+
+\begin{table}
+\centering
+\begin{tabular}{l|r |r}
+Size & Proportions of tilings & Guess\\\hline
+1 & 0/1 & No \\
+2 & 1/1  &  Yes \\
+3 & 0/3 & No \\
+4 & 3/3 & Yes \\
+5 & 3/6 & No \\
+6 & 0/6 ? & No \\
+7 & 4/10 ? & No  \\
+8 & 7/10 ? & Yes \\
+9 & 0/10  ? & No \\
+10 & Discouraged \\
+\end{tabular}
+\caption{\label{tab:widgets}Experimental results.}
+\end{table}
+
+\end{frame}
+\begin{frame}
+\frametitle{4- Find and prove easy cases}
+
+\begin{block}{A basic observation}
+A tiling of a deficient $n$-board is not possible if $n^2 -1 \neq 0 \mod 3$ \newline
+Equivalently, there is no tiling of a deficient $n$-board  if $n = 0 \mod 3$
+\end{block}
+
+\pause	
+\begin{exampleblock}{What does it tell us ?}
+We can strenghten the hypothesis on $n$ : $n=2k+1$ or $n=2k+2$\newline
+\pause
+We know for sure that $7$ is the smallest possible counter-example.
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{5- Try to find related questions}
+
+\begin{block}{Sources of inspiration}
+All previous steps ! \newline
+\end{block}
+\pause
+\begin{exampleblock}{A few questions}
+Which rectangles can be covered with L-trominos ?\newline
+\pause
+Can we find an induction relation between a $n$-deficient board and a smaller one ?\newline
+\pause
+Can we prove the result for $n=k+1$ ? $n=3k+2$ ?\newline
+\pause
+Can all 7-deficient boards be covered with $L-trominos$ ? \newline
+\pause
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{6- Be lazy}
+
+\begin{alertblock}{Theorem of minimal efforts}
+Finding a counter-example is usually the easiest way to tackle a conjecture.
+\end{alertblock}
+
+\pause
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{7.png}
+\caption{\label{fig:proof} a new coverable deficient 7-boards}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{A few bonuses...}
+\begin{exampleblock}{...to tackle this conjecture}
+$\bullet$ Prove that 7-deficient boards can all be covered. \newline
+$\bullet$ Find a new conjecture. \newline
+$\bullet$ Distinguish odd and even cases. \newline
+$\bullet$ Prove your conjecture by induction. \newline
+\end{exampleblock}
+
+\end{frame}
+
+\end{document}

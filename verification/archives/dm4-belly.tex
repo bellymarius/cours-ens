@@ -1,0 +1,69 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\title{Verification: Homework 4}
+\author{Marius }
+\date{October 2021e}
+
+
+\usepackage{stmaryrd}	%N
+\usepackage{esvect}		%Vector
+\usepackage{hyperref}	%hypertext link
+\usepackage{graphicx}
+\usepackage{amsmath}    %overset
+\usepackage{amssymb}    %square
+\usepackage{amsthm}		%proof
+\usepackage{xcolor}		%color
+\usepackage{esvect}		%Vector
+\usepackage{tikz}		%draw
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usetikzlibrary{arrows}
+
+
+%%% Operator %%%
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\card}[1]{\ensuremath{\left\|#1 \right\|}}
+\newcommand{\interval}[2]{\ensuremath{\llbracket #1, \; #2 \rrbracket}}
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\br}[1]{\ensuremath{\llbracket #1 \rrbracket}} %Interpretation
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+% Shortcuts sets
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}} %Abrev mathcal
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+
+%%% shorcuts logic %%%
+\newcommand{\G}{\Gamma} % Abreviation pour logique etc..
+\newcommand{\D}{\Delta} % Abreviation pour logique
+\newcommand{\T}{\mathcal{T}} %Abreviation T pour logique
+
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\R}{\mathcal{R}}
+
+
+\begin{document}
+\maketitle
+\noindent
+$\bullet$ $\br{p}= \{1,2,4,5\}$\newline
+$\bullet$ $\br{EGp}= \{1,2,4,5\}$ respectively with paths $(12)^\omega,(21)^\omega,45^\omega,5^\omega$\newline
+$\bullet$ $\br{q}= \{2,3,4\}$\newline
+$\bullet$ $\br{EXq}= \{0,1,2,3,4\}$ respectively because $0 \rightarrow 3, 1 \rightarrow 2, 2 \rightarrow 3$ and $3 \leftrightarrow 4$\newline
+$\bullet$ $\br{AGEXq}= \emptyset$ because 5 is reachable from every other states\newline
+$\bullet$ $\br{E((EGp)U(AGEXq)}= \emptyset$ as a direct consequence.\newline
+$\bullet$ $\br{EXEGp}= \{0,1,2,3,4,5\}$ because $0 \rightarrow 3, 1 \leftrightarrow 2, 2 \rightarrow 3, 3 \leftrightarrow 4$ and $5 \rightarrow 5$\newline
+$\bullet$ $\br{A((EXEGp)Uq)}= \{0,1,2,3,4\}$ because $5^\omega$ never satisfies $q$. \newline	
+
+
+
+\newpage
+
+
+\end{document}

@@ -1,0 +1,192 @@
+\documentclass[pdf]{beamer}
+\usepackage[utf8]{inputenc}
+\usefonttheme{professionalfonts}
+\usetheme{Madrid}
+\useoutertheme{shadow}
+\useinnertheme{circles} %Less sharpened edges
+\usecolortheme{}
+\title{Logic for AI : Part II}
+\author{Marius}
+\date{December 2021}
+
+\usepackage{stmaryrd}   %N
+\usepackage{esvect}     %Vector
+\usepackage{hyperref}   %hypertext link
+\usepackage{graphicx}
+\usepackage{amsmath}    %overset
+\usepackage{amssymb}    %square
+\usepackage{amsthm}     %proof
+\usepackage{xcolor}     %color
+\usepackage{esvect}     %Vector
+\usepackage{tikz}       %draw
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usetikzlibrary{arrows}
+
+
+%%% Operator %%%
+\newcommand{\norm}[1]{\left\Vert #1 \right\Vert}
+\newcommand{\card}[1]{\ensuremath{\left\|#1 \right\|}}
+\newcommand{\interval}[2]{\ensuremath{\llbracket #1, \; #2 \rrbracket}}
+\newcommand{\set}[1]{\{ #1 \}}
+\newcommand{\br}[1]{\ensuremath{\llbracket #1 \rrbracket}} %Interpretation
+\newcommand{\floor}[1]{\lfloor #1 \rfloor}
+\newcommand{\ceil}[1]{\lceil #1 \rceil}
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
+
+% Shortcuts sets
+\newcommand{\bb}[1]{\mathbb{#1}}
+\newcommand{\mc}[1]{\mathcal{#1}} %Abrev mathcal
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+
+%%% shorcuts logic %%%
+\newcommand{\G}{\Gamma} % Abreviation pour logique etc..
+\newcommand{\D}{\Delta} % Abreviation pour logique
+\newcommand{\T}{\mathcal{T}} %Abreviation T pour logique
+
+\newcommand{\V}{\mathcal{V}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\F}{\mathcal{F}}
+
+\begin{document}
+\maketitle
+
+\begin{frame}
+\frametitle{Davis-Putman-Loveland-Logmann}
+
+\begin{block}{DPLL Algorithm}
+$\bullet$ Guess the assignment of a variable \newline
+$\bullet$ Propagate the decision through unit propagation \newline
+$\bullet$ In case of conflict, switch the last decision\newline
+\end{block}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Conflit Driven Clause Learning}
+
+\begin{block}{CDCL Algorithm}
+$\bullet$ Guess the assignment of a variable \newline
+$\bullet$ Propagate the decision through unit propagation \newline
+$\bullet$ In case of conflict, switch the last decision and add a cause preventing the partial assignment that led to the conflict. \newline
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Conflit Driven Clause Learning II}
+
+\begin{block}{Definitions}
+A \emph{cut clause} is a cut that separates the decisions from the conflict in an oriented graph where edges are (partial) implication of unit propagation. \newline
+A \emph{Unique Implication Point (UIP)} is a literal $l$ propagated at decision level $d$ occuring in each path from decision $d$ to the conflict  \newline
+\end{block}
+
+\begin{exampleblock}{Optimisations}
+Any cut clause may replace the clause learnt.\newline
+A way to do it is to iteratively replace a decision with an UIP, preferably the closest one to the conflict \newline
+Then, We may add \emph{back clauses} to keep informations about the relations between UIPs and decisions.\newline
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conflit Driven Clause Learning in theory $\T$}
+
+\begin{block}{Definitions}
+A \emph{boolean encoder} $e$ replaces atoms of the theories with new boolean \newline 
+(e.g $x<2 \rightarrow x_0$)\newline
+A \emph{unsat core} is a minimal subset of the atoms of the formula that is unsat.\newline
+\end{block}
+
+\begin{block}{CDCL($\T$) Algorithm}
+$\bullet$ Apply CDCL Algorithm \newline
+$\bullet$ At each decision, apply Theory Propagation Algorithm.\newline
+\end{block}
+
+
+\begin{block}{Theory Propagation Algorithm}
+$\bullet$ Check Satisfiability of $e^{-1}(m)$ \newline
+$\bullet$ If UNSAT, return an unsat core and a decision level.\newline
+$\bullet$ If SAT returns atoms of the input formula implied by $e^{-1}(m)$.\newline
+\end{block}
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Theory 1 : Equality and Function symbols (basics)}
+
+\begin{block}{EUF}
+Signature : $\{\F,=\}$ \newline
+Deduction : Symmetry, Transitivity, Congruence
+\end{block}
+
+\begin{exampleblock}{Remark}
+Constant may be removed (There is an equisatisfiable formula).
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Theory 1 : Equality and Function symbols (TheoryPropagation)}
+
+\begin{block}{Ackermann's reduction}
+$\bullet$ Encode terms with new constants\newline
+$\bullet$ Encode atoms with variables (boolean encoder) \newline
+$\bullet$ Solve the satisfiability of $F \wedge Rules$ \newline
+This is possible because applicable rules are finite and determined by the subterms of the initial formula.
+\end{block}
+
+\begin{exampleblock}{A quick example}
+$x=y \Rightarrow f(x)=f(y)\newline
+t_1=t_2 \Rightarrow t_3=t_4, t_1=t_2 \Rightarrow t_2=t_1$... \newline 
+$p_1 \Rightarrow p_2, p_1 \Rightarrow p_3$...
+\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Theory 1 : Equality and Function symbols (	TheoryPropagation II)}
+
+\begin{block}{Lazy-QF\_EUF}
+$\bullet$ Process each subformula $t_1 \otimes t_2$.\newline
+$\bullet$ Keep tracks of equivalence class among terms and subterms.\newline
+\end{block}
+
+\begin{exampleblock}{A quick example}
+$f(x)=x \wedge f(f(x)) \neq x \newline
+f(x)=x \rightarrow C=[\{x,f(x)\}]\newline
+f(f(x)) \neq x \rightarrow C=[\{x,f(x)\},\{f(f(x))\}],D=[(C_0,C_1)]\newline
+f(x),f(f(x)) \in T \wedge x \sim f(x) \rightarrow \text{ merge } C_0 \text{ and } C_1$. \newline
+As $(C_0,C_1) \in D$, return UNSAT.
+\end{exampleblock}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Theory 2 : Linear Rational Arithmetic}
+
+\begin{block}{LRA}
+Signature : $\{\N,<,+\}$ \newline
+Deduction : Non-negative linear combination of inequalities
+\end{block}
+
+\begin{alertblock}{Fundamental Theorem of Linear Inequality}
+Let $(a_i)_{0\leqi<m}$ and $b \in \R^n$. Then : \newline
+$\bullet$ Either $ \exists \lambda_0...\lambda_{m-1} ~b=\lambda_0 a_0...\lambda_{m-1} a_{m-1}$ and $a_1...a_m$ linearly independent. \newline
+$\bullet$ Or there exists a hyperplane $\{c \vert cx=0\}$ such that $ca_i \geq0$ and $cb<0$
+\end{alertblock}
+
+\begin{exampleblock}{Remarks}
+This is a fancy way to say that either $b$ is in the cone generated by $(a_i)_{0\leq i<m}$ or it is not.\newline
+A \emph{cone} generated by $(a_i)_{0\leq i<m}$ is $\{\lambda_0 a_0...\lambda_{m-1} a_{m-1}\}$
+\end{exampleblock}
+
+\end{frame}
+
+\end{document}
